@@ -3,6 +3,7 @@
 class staticStatus {
 
     public $status = array();
+    public $appPath = "/var/www/html/restapi/";
 
     public function getStatus() 
     {
@@ -13,6 +14,10 @@ class staticStatus {
         $this->status['FORBIDDEN'] = 403;
         $this->status['NOT_FOUND'] = 404;
         return $this->status;
+    }
+
+    public function getAppPath(){
+        return $appPath;
     }
 
 
