@@ -5,13 +5,19 @@ include_once '../Activities/userActivities.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
- 
+
+$requestType = $_SERVER['REQUEST_METHOD']; 
+
+if ($requestType === 'OPTIONS') {
+     setResponse(200, "Success");
+}
+
 $request = (array) json_decode(file_get_contents("php://input"), TRUE);
 
-if(!empty($request)) {
+if($requestType === 'POST') {
         if( !empty($request['email']) && !empty($request['password']))
         {
             $data = convertRequstIntoObject($request);
@@ -27,9 +33,8 @@ if(!empty($request)) {
         } else {
             setResponse(400,"Bad Request");
         }
-
 } else{
-    setResponse(400,"Bad Request");
+    setResponse(400,"Bad Request Type");
 }
 
 
